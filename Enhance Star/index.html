@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>Enhance Star</title>
+  <meta name="description" content="Enhance Star — Editor profesional: mejora IA, eliminación de fondo, zoom, pan, filtros y animaciones." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="introLoader" role="status" aria-live="polite">
+    <div class="loader-card" role="presentation" aria-hidden="false">
+      <div class="loader-top">
+        <div class="loader-logo" aria-hidden="true">
+          <img alt="Logo Enhance Star" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhi_PvmsAMKmSMv8v1qtG6RQbzCm8DjFhzZDO5eklCD4VfhfeIe_RKnCT4thyphenhyphen5M_jYl9nqNp8PUk5_YP2rHrdQK7Q_1ZC4mqkb1zgi0TkM_NT-vQzgtG3-sW24rIOdS8KVC0TCnbd4Sv1dEv5IdAaG8bDQzXagVkeK2xoH690nDdomWEcYOfVtVYybfIQw/s320/Copilot_20251208_202732.png" />
+        </div>
+        <div>
+          <div class="loader-title">Enhance Star</div>
+          <div class="loader-sub">Preparamos tu editor — por favor espera<span class="dots" aria-hidden="true"></span></div>
+        </div>
+      </div>
+
+      <div class="progress-wrap" aria-hidden="false">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="bar" id="loaderBar"></div>
+        </div>
+        <div class="loader-eta" id="loaderEta">Cargando — 0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app" id="app" role="application" aria-label="Enhance Star Image Editor">
+
+    <div class="topbar" role="navigation" aria-label="Barra superior">
+      <div class="brand" style="gap:14px;">
+        <div class="brand-logo" aria-hidden="true"><img alt="Enhance Star Logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhi_PvmsAMKmSMv8v1qtG6RQbzCm8DjFhzZDO5eklCD4VfhfeIe_RKnCT4thyphenhyphen5M_jYl9nqNp8PUk5_YP2rHrdQK7Q_1ZC4mqkb1zgi0TkM_NT-vQzgtG3-sW24rIOdS8KVC0TCnbd4Sv1dEv5IdAaG8bDQzXagVkeK2xoH690nDdomWEcYOfVtVYybfIQw/s320/Copilot_20251208_202732.png" /></div>
+        <div class="brand-text">
+          <div class="title">Enhance Star</div>
+          <div class="subtitle">Editor IA • Mejora la calidad de tus imagenes</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <nav class="nav" aria-label="Menu principal">
+          <button id="menuHome" title="Inicio">Inicio</button>
+          <button id="menuEditor" title="Editor">Editor</button>
+          <button id="menuPresets" title="Presets">Presets</button>
+          <button id="menuHelp" title="Ayuda">Ayuda</button>
+        </nav>
+
+        <div class="top-actions">
+          <label style="display:flex;gap:8px;align-items:center;color:var(--muted);"><input type="checkbox" id="autoDownload" /> Descargar auto</label>
+          <!-- Se eliminó la etiqueta 'Usuario: none' como pediste -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================= CARD PRINCIPAL ========================= -->
+    <div class="card" role="region" aria-label="Editor Card">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="badge" style="padding:6px 10px;border-radius:999px;background:linear-gradient(180deg,rgba(124,240,201,0.12),rgba(77,182,255,0.12));border:1px solid rgba(124,240,201,0.18);color:#d4fff1;font-weight:700;">ENHANCE</div>
+          <div class="hint">Atajos: E=Mejorar • B=Fondo • C=Limpiar • Esc=Reset</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <button id="quickImprove" class="btn btn-primary" title="Mejorar rápido">Mejorar rápido</button>
+          <div class="hint">Versión: <strong>1.0</strong></div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <!-- LEFT PANE -->
+        <div class="pane" id="paneOriginal" aria-label="Original pane">
+          <div class="pane-header">
+            <div class="pane-title" id="titleOriginal">Original</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="file-input">
+                <label class="file-label" title="Seleccionar imagen">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#93ffd8" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span>Seleccionar imagen</span>
+                  <input id="file" type="file" accept="image/*" />
+                </label>
+              </div>
+              <button id="clearBtn" class="btn btn-danger" disabled>Limpiar</button>
+            </div>
+          </div>
+
+          <div class="image-wrap">
+            <div class="image-frame" id="originalFrame">
+              <img id="originalImg" alt="Imagen original" />
+              <div class="overlay-info" id="originalInfo">Sin imagen</div>
+              <div class="zoom-controls">
+                <button class="zoom-btn" id="origZoomIn" title="Acercar">+</button>
+                <button class="zoom-btn" id="origZoomOut" title="Alejar">−</button>
+                <button class="zoom-btn" id="origReset" title="Reset">⟲</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="bgRemoveBtn" class="btn" disabled>🪄 Eliminar fondo</button>
+            <div class="progress" aria-label="Progreso fondo" title="Progreso de eliminación de fondo"><div class="bar" id="bgProgressBar"></div></div>
+            <div style="flex:1"></div>
+            <button id="downloadBgBtn" class="btn" disabled>Descargar sin fondo</button>
+          </div>
+        </div>
+
+        <!-- RIGHT PANE -->
+        <div class="pane" id="paneEnhanced" aria-label="Enhanced pane">
+          <div class="pane-header">
+            <div class="pane-title" id="titleEnhanced">Mejorada (IA)</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button id="enhanceBtn" class="btn btn-primary" disabled>✨ Botón mágico</button>
+              <div class="progress" aria-label="Progreso mejora" title="Progreso de mejora"><div class="bar" id="progressBar"></div></div>
+              <button id="downloadBtn" class="btn" disabled>Descargar</button>
+            </div>
+          </div>
+
+          <div class="image-wrap">
+            <div class="image-frame" id="enhancedFrame">
+              <img id="enhancedImg" alt="Imagen mejorada" />
+              <div class="overlay-info" id="enhancedInfo">Pendiente</div>
+              <div class="zoom-controls">
+                <button class="zoom-btn" id="enhZoomIn" title="Acercar">+</button>
+                <button class="zoom-btn" id="enhZoomOut" title="Alejar">−</button>
+                <button class="zoom-btn" id="enhReset" title="Reset">⟲</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings" id="settingsPanel" aria-label="Ajustes">
+            <div class="setting-item">
+              <div class="setting-label"><strong>Reducción de ruido</strong><span class="hint">e_noise (20-80)</span></div>
+              <div class="setting-control"><input id="noiseRange" type="range" min="20" max="80" step="5" value="50"/><input id="noiseNumber" type="number" min="20" max="80" step="5" value="50" style="width:80px;padding:6px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)"/></div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label"><strong>Nitidez</strong><span class="hint">e_sharpen (20-80)</span></div>
+              <div class="setting-control"><input id="sharpenRange" type="range" min="20" max="80" step="5" value="60"/><input id="sharpenNumber" type="number" min="20" max="80" step="5" value="60" style="width:80px;padding:6px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)"/></div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label"><strong>Ancho destino</strong><span class="hint">w_ (1200-3200 px)</span></div>
+              <div class="setting-control"><input id="widthRange" type="range" min="1200" max="3200" step="200" value="2400"/><input id="widthNumber" type="number" min="1200" max="3200" step="200" value="2400" style="width:100px;padding:6px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)"/></div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label"><strong>Mejora global</strong><span class="hint">e_improve</span></div>
+              <div class="setting-control"><input id="improveSwitch" type="checkbox" checked/></div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-label"><strong>Upscale IA</strong><span class="hint">e_upscale</span></div>
+              <div class="setting-control"><input id="upscaleSwitch" type="checkbox" checked/></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div>Enhance Star — Creada por Sam Alexander Castillo</div>
+      <div>© <span id="year"></span> Enhance Star</div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
